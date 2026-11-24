@@ -1,0 +1,24 @@
+
+
+title: AWS IAM Access Key Creation
+id: 8f3a9c2b-1d4e-4f5a-9b2c-3d4e5f6a7b8c
+status: experimental
+description: Detects the creation of new IAM access keys, which may indicate persistence or credential harvesting following account compromise.
+author: Detection Engineer
+date: 2026-07-25
+modified: 2026-07-25
+tags:
+  - attack.persistence
+  - attack.credential_access
+  - aws.cloudtrail
+logsource:
+  product: aws
+  service: cloudtrail
+selection:
+  eventName: CreateAccessKey
+  userIdentity.type: IAMUser
+  responseElements.accessKey.status: Active
+condition: selection
+falsepositives:
+  - Legitimate administrative activity
+level: high
